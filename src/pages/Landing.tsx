@@ -93,14 +93,14 @@ function GlassNav() {
             <RadarIcon className="size-4.5" strokeWidth={2.2} />
           </span>
           <span className="text-[15px] font-semibold tracking-tight">
-            Foundr<span className="text-gradient">Match</span>
+            Founder Connect <span className="text-gradient">AI</span>
           </span>
         </Link>
 
         <div className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
           <a href="#onboarding" className="transition-colors hover:text-foreground">How it works</a>
           <a href="#features" className="transition-colors hover:text-foreground">Matching AI</a>
-          <a href="#deck" className="transition-colors hover:text-foreground">Discovery</a>
+          <a href="#deck" className="transition-colors hover:text-foreground">Catalog</a>
         </div>
 
         <div className="flex items-center gap-2">
@@ -211,8 +211,9 @@ function Hero() {
             transition={{ duration: 0.6, delay: 0.16 }}
             className="mt-5 max-w-xl text-pretty text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            FoundrMatch pairs you with co-founders who share your vision, culture and work
-            ethic — scored by AI on skills, values and timing, not just keywords.
+            Founder Connect AI pairs you with co-founders who share your vision, culture and
+            work ethic — scored on skills, values and timing, not just keywords. Browse the
+            catalog, study the match math, and open a conversation when the numbers look right.
           </motion.p>
 
           <motion.div
@@ -233,7 +234,7 @@ function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="glass-subtle h-12 rounded-2xl border-white/60 px-5 text-[15px] font-medium hover:bg-white/70"
+              className="              glass-subtle h-12 rounded-2xl border-white/10 px-5 text-[15px] font-medium hover:bg-white/10"
               onClick={() => startIntent("commercial", navigate)}
             >
               Find a Commercial Co-Founder
@@ -360,7 +361,7 @@ function OnboardingPreview() {
                         key={s}
                         className={cn(
                           "glass-subtle rounded-xl px-3 py-4 text-center text-sm font-medium",
-                          i === 1 && "border-primary/50 bg-white/70 shadow-[0_0_0_3px_hsl(262_75%_58%/0.12)]",
+                          i === 1 && "border-primary/50 bg-white/10 shadow-[0_0_0_3px_hsl(262_75%_58%/0.25)]",
                         )}
                       >
                         {s}
@@ -400,7 +401,7 @@ function OnboardingPreview() {
                         key={t}
                         className={cn(
                           "glass-subtle rounded-xl px-4 py-4 text-sm font-medium",
-                          i === 0 && "border-primary/50 bg-white/70 shadow-[0_0_0_3px_hsl(262_75%_58%/0.12)]",
+                          i === 0 && "border-primary/50 bg-white/10 shadow-[0_0_0_3px_hsl(262_75%_58%/0.25)]",
                         )}
                       >
                         {t}
@@ -483,7 +484,7 @@ function OnboardingPreview() {
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Industries</p>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {parsed.suggestedIndustries.length ? (
-                  parsed.suggestedIndustries.map((s) => <MonoTag key={s} className="border-emerald-500/30 text-emerald-700">{s}</MonoTag>)
+                  parsed.suggestedIndustries.map((s) => <MonoTag key={s} className="border-emerald-500/30 text-emerald-400">{s}</MonoTag>)
                 ) : (
                   <span className="text-xs text-muted-foreground">—</span>
                 )}
@@ -558,7 +559,7 @@ function Features() {
             transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
           >
             <GlassPanel hover className="h-full rounded-2xl p-6">
-              <span className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-[hsl(262_75%_58%/0.14)] to-[hsl(160_70%_50%/0.14)] text-primary ring-1 ring-white/60">
+              <span className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-[hsl(262_75%_58%/0.2)] to-[hsl(160_70%_50%/0.16)] text-primary ring-1 ring-white/10">
                 <f.icon className="size-5" strokeWidth={1.9} />
               </span>
               <h3 className="mt-4 text-[15px] font-semibold">{f.title}</h3>
@@ -588,9 +589,9 @@ function DeckPreview() {
   return (
     <section id="deck" className="mx-auto w-full max-w-6xl px-4 py-24">
       <SectionHeading
-        eyebrow="Discovery Deck"
-        title={<>Swipe on <span className="text-gradient">co-founders</span>, not soulmates</>}
-        sub="Professional cards with the numbers that matter: compatibility score, pitch, stack — and a full synergy breakdown before you commit."
+        eyebrow="Catalog & Discovery"
+        title={<>Browse like LinkedIn, <span className="text-gradient">match like a pro</span></>}
+        sub="A searchable catalog with the numbers that matter: compatibility score, pitch, stack — and a full synergy breakdown plus a conversation thread on every profile."
       />
 
       <div className="mt-12 grid items-start gap-6 lg:grid-cols-[0.95fr_1.05fr]">
@@ -618,28 +619,16 @@ function DeckPreview() {
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">
-            {["Coffee Chat", "Request NDA", "Pass"].map((label, i) => (
-              <Button
-                key={label}
-                size="sm"
-                variant={i === 0 ? "default" : i === 2 ? "ghost" : "outline"}
-                className={cn("rounded-xl", i === 1 && "glass-subtle border-white/60", i === 2 && "text-muted-foreground")}
-                onClick={() =>
-                  toast(
-                    i === 0
-                      ? `Coffee chat requested with ${f.name.split(" ")[0]} ☕`
-                      : i === 1
-                        ? `NDA/deck request sent to ${f.name.split(" ")[0]}`
-                        : `Passed on ${f.name.split(" ")[0]}`,
-                    { description: "Sign up free to run the real deck." },
-                  )
-                }
-              >
-                {i === 0 && <Coffee className="size-3.5" />}
-                {i === 1 && <FileText className="size-3.5" />}
-                {label}
-              </Button>
-            ))}
+            <Button size="sm" className="rounded-xl" asChild>
+              <Link to="/auth?returnTo=%2Ffounders">
+                <Coffee className="size-3.5" /> Open full profile
+              </Link>
+            </Button>
+            <Button size="sm" variant="outline" className="glass-subtle rounded-xl border-white/10" asChild>
+              <Link to="/auth?returnTo=%2Ffounders">
+                <FileText className="size-3.5" /> See the catalog
+              </Link>
+            </Button>
           </div>
         </GlassPanel>
 
@@ -648,7 +637,7 @@ function DeckPreview() {
           <GlassPanel className="rounded-3xl p-6">
             <div className="mb-2 flex items-center justify-between">
               <h3 className="text-sm font-semibold">Skillset radar</h3>
-              <MonoTag className="border-emerald-500/30 text-emerald-700">Complementary</MonoTag>
+              <MonoTag className="border-emerald-500/30 text-emerald-400">Complementary</MonoTag>
             </div>
             <MatchRadar data={radarData} height={250} />
             <div className="mt-1">
@@ -663,7 +652,7 @@ function DeckPreview() {
                   hover
                   className={cn(
                     "flex w-60 items-center gap-3 rounded-2xl p-3",
-                    i === selected && "border-primary/40 shadow-[0_0_0_3px_hsl(262_75%_58%/0.12)]",
+                    i === selected && "border-primary/40 shadow-[0_0_0_3px_hsl(262_75%_58%/0.25)]",
                   )}
                 >
                   <FounderAvatar name={p.name} hue={p.avatarHue} />
@@ -691,8 +680,8 @@ function DeckPreview() {
 function Steps() {
   const steps = [
     { icon: UserPlus, title: "Map your graph", body: "Two sentences or a pasted bio. The parser extracts skills, industries, stage and expectations." },
-    { icon: Layers, title: "Swipe the deck", body: "A filtered feed of compatible founders with transparent match math on every card." },
-    { icon: Coffee, title: "Coffee, then cap table", body: "Book a chat, swap decks under NDA, and build the thing together." },
+    { icon: Layers, title: "Browse the catalog", body: "Search and filter verified founders ranked by how well they complement your graph." },
+    { icon: Coffee, title: "Message, then meet", body: "Open a thread, book a coffee chat, swap decks under NDA — then build the thing together." },
   ];
   return (
     <section className="mx-auto w-full max-w-6xl px-4 pb-24">
@@ -745,7 +734,7 @@ function FinalCta() {
             <Button
               size="lg"
               variant="outline"
-              className="glass-subtle h-12 rounded-2xl border-white/60 px-6 hover:bg-white/70"
+              className="              glass-subtle h-12 rounded-2xl border-white/10 px-6 hover:bg-white/10"
               onClick={() => startIntent("commercial", navigate)}
             >
               I'm technical — find a commercial partner
@@ -765,14 +754,14 @@ function Footer() {
           <span className="flex size-6 items-center justify-center rounded-lg bg-gradient-to-br from-[hsl(262_75%_58%)] to-[hsl(200_80%_55%)] text-white">
             <RadarIcon className="size-3.5" />
           </span>
-          <span className="font-semibold text-foreground">FoundrMatch</span>
+          <span className="font-semibold text-foreground">Founder Connect AI</span>
           <span className="text-xs">© 2026</span>
         </div>
         <div className="flex gap-5 text-xs">
           <a href="#onboarding" className="hover:text-foreground">How it works</a>
           <a href="#features" className="hover:text-foreground">Matching AI</a>
-          <a href="#deck" className="hover:text-foreground">Discovery</a>
-          <Link to="/auth?returnTo=%2Fdashboard" className="hover:text-foreground">Sign in</Link>
+          <a href="#deck" className="hover:text-foreground">Catalog</a>
+          <Link to="/auth?returnTo=%2Ffounders" className="hover:text-foreground">Sign in</Link>
         </div>
       </div>
     </footer>

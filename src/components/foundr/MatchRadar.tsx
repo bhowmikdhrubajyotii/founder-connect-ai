@@ -36,18 +36,18 @@ export function MatchRadar({
   themLabel?: string;
   className?: string;
 }) {
-  const colorMe = "hsl(262 72% 56%)";
-  const colorThem = "hsl(160 74% 42%)";
+  const colorMe = "hsl(262 85% 68%)";
+  const colorThem = "hsl(160 74% 52%)";
 
   return (
     <div className={cn("w-full", className)} style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart data={data} outerRadius="72%" margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
-          <PolarGrid stroke="hsl(262 20% 40% / 0.18)" />
+          <PolarGrid stroke="hsl(260 40% 80% / 0.14)" />
           <PolarAngleAxis
             dataKey="axis"
             tickFormatter={(v: RadarAxis) => AXIS_LABEL[v] ?? v}
-            tick={{ fill: "hsl(262 12% 35%)", fontSize: 11, fontWeight: 600 }}
+            tick={{ fill: "hsl(260 25% 82%)", fontSize: 11, fontWeight: 600 }}
           />
           <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
           <Radar
@@ -69,16 +69,18 @@ export function MatchRadar({
             isAnimationActive
           />
           <Tooltip
-            cursor={{ stroke: "hsl(262 20% 40% / 0.25)" }}
+            cursor={{ stroke: "hsl(260 40% 80% / 0.2)" }}
             contentStyle={{
-              background: "rgba(255,255,255,0.92)",
+              background: "rgba(24,24,34,0.94)",
               backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.7)",
+              border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: 12,
               fontSize: 12,
-              boxShadow: "0 12px 32px -12px rgba(70,60,180,0.35)",
+              color: "hsl(260 20% 92%)",
+              boxShadow: "0 12px 32px -12px rgba(0,0,0,0.6)",
             }}
-            labelStyle={{ fontWeight: 700, color: "hsl(262 20% 30%)" }}
+            labelStyle={{ fontWeight: 700, color: "hsl(260 20% 92%)" }}
+            itemStyle={{ color: "hsl(260 15% 85%)" }}
           />
         </RadarChart>
       </ResponsiveContainer>

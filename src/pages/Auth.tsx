@@ -130,12 +130,12 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                   <RadarIcon className="size-5" />
                 </span>
                 <span className="text-lg font-semibold tracking-tight">
-                  Foundr<span className="text-gradient">Match</span>
+                  Founder Connect <span className="text-gradient">AI</span>
                 </span>
               </button>
                 <CardTitle className="text-xl">Find your co-founder</CardTitle>
                 <CardDescription>
-                  Enter your email to log in or sign up
+                  Sign up or log in — browse the catalog, open profiles and start conversations.
                 </CardDescription>
               </CardHeader>
               <form onSubmit={handleEmailSubmit}>
@@ -280,7 +280,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
             </>
           )}
 
-          <div className="py-4 px-6 text-xs text-center text-muted-foreground border-t border-white/60 rounded-b-3xl">
+          <div className="py-4 px-6 text-xs text-center text-muted-foreground border-t border-white/10 rounded-b-3xl">
             Free to join · 3 minutes to a mapped founder graph · Secured by{" "}
             <a
               href="https://freebuff.com"

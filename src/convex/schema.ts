@@ -67,6 +67,16 @@ const schema = defineSchema(
         v.literal("pass"),
       ),
     }).index("by_user", ["userId"]),
+
+    // Founder Connect AI: thread comments on founder profiles
+    founderComments: defineTable({
+      userId: v.id("users"),
+      founderId: v.string(),
+      body: v.string(),
+      authorName: v.optional(v.string()),
+    })
+      .index("by_founder", ["founderId"])
+      .index("by_user", ["userId"]),
   },
   {
     schemaValidation: false,

@@ -313,6 +313,57 @@ export function parseBio(raw: string): ParsedBio {
   };
 }
 
+/* --------------------------- catalog helpers --------------------------- */
+
+export function getFounder(id: string): FounderProfile | undefined {
+  return FOUNDERS.find((f) => f.id === id);
+}
+
+export function searchFounders(list: FounderProfile[], q: string): FounderProfile[] {
+  const term = q.trim().toLowerCase();
+  if (!term) return list;
+  return list.filter((f) =>
+    [f.name, f.title, f.headline, f.pitch, ...f.industries, ...f.stack, f.location]
+      .join(" ")
+      .toLowerCase()
+      .includes(term),
+  );
+}
+
+/* --------------------- shared "me" profile for scoring --------------------- */
+
+export type MeProfile = Pick<
+  Onboarding,
+  "stage" | "commitment" | "equity" | "workStyle" | "lookingFor" | "industries"
+>;
+
+export const DEFAULT_ME: MeProfile = {
+  stage: "Idea",
+  commitment: "Full-time",
+  equity: "Equal split",
+  workStyle: "Ship fast & iterate",
+  lookingFor: "Technical Co-Founder",
+  industries: [],
+};
+
+export function meFromProfile(p: {
+  stage: string;
+  commitment: string;
+  equity: string;
+  workStyle: string;
+  lookingFor: string;
+  industries: string[];
+}): MeProfile {
+  return {
+    stage: p.stage as Onboarding["stage"],
+    commitment: p.commitment as Onboarding["commitment"],
+    equity: p.equity as Onboarding["equity"],
+    workStyle: p.workStyle as Onboarding["workStyle"],
+    lookingFor: p.lookingFor as Onboarding["lookingFor"],
+    industries: p.industries,
+  };
+}
+
 /* ------------------------- vision synergy engine ------------------------- */
 
 export type SynergyFactor = {

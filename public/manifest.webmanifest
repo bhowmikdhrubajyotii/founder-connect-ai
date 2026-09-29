@@ -1,11 +1,11 @@
 {
-  "name": "FoundrMatch",
-  "short_name": "FoundrMatch",
-  "description": "Find the Woz to your Jobs — AI co-founder matching on vision, skills, culture and equity.",
+  "name": "Founder Connect AI",
+  "short_name": "Founder Connect",
+  "description": "Match with founders who share your vision — AI-scored compatibility on skills, culture and equity.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
   "icons": [
     {
       "src": "/logo.svg",

@@ -39,6 +39,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FounderAvatar, GlassPanel, MonoTag } from "@/components/foundr/GlassKit";
+import { FounderCard } from "@/components/foundr/FounderCard";
 import { ScoreRing } from "@/components/foundr/ScoreRing";
 import { MatchRadar, RadarLegend } from "@/components/foundr/MatchRadar";
 import { OnboardingFlow } from "@/components/foundr/OnboardingFlow";
@@ -46,13 +47,15 @@ import { useAuth } from "@/hooks/use-auth";
 import {
   applyFilters,
   computeSynergy,
+  DEFAULT_ME,
   EMPTY_FILTERS,
   FOUNDERS,
   INDUSTRIES,
+  meFromProfile,
   STACKS,
   type Filters,
   type FounderProfile,
-  type Onboarding,
+  type MeProfile,
 } from "@/lib/foundr";
 import { cn } from "@/lib/utils";
 
@@ -161,7 +164,7 @@ function SwipeCard({
   isTop,
 }: {
   founder: FounderProfile;
-  me: Pick<Onboarding, "stage" | "commitment" | "equity" | "workStyle" | "lookingFor" | "industries">;
+  me: MeProfile;
   onPass: () => void;
   onCoffee: () => void;
   onNda: () => void;
@@ -279,7 +282,7 @@ function SynergyModal({
   onOpenChange,
 }: {
   founder: FounderProfile | null;
-  me: Pick<Onboarding, "stage" | "commitment" | "equity" | "workStyle" | "lookingFor" | "industries">;
+  me: MeProfile;
   open: boolean;
   onOpenChange: (o: boolean) => void;
 }) {
@@ -373,6 +376,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const profile = useQuery(api.foundr.getMyProfile);
   const actions = useQuery(api.foundr.myActions);
+  const threads = useQuery(api.comments.myThreads);
   const recordAction = useMutation(api.foundr.recordAction);
   const resetActions = useMutation(api.foundr.resetActions);
 
@@ -381,26 +385,14 @@ export default function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [queueIndex, setQueueIndex] = useState(0);
 
-  const me = useMemo<Pick<Onboarding, "stage" | "commitment" | "equity" | "workStyle" | "lookingFor" | "industries">>(
+  const me = profile ? meFromProfile(profile) : DEFAULT_ME;
+
+  const topMatches = useMemo(
     () =>
-      profile
-        ? {
-            stage: profile.stage as Onboarding["stage"],
-            commitment: profile.commitment as Onboarding["commitment"],
-            equity: profile.equity as Onboarding["equity"],
-            workStyle: profile.workStyle as Onboarding["workStyle"],
-            lookingFor: profile.lookingFor as Onboarding["lookingFor"],
-            industries: profile.industries,
-          }
-        : {
-            stage: "Idea",
-            commitment: "Full-time",
-            equity: "Equal split",
-            workStyle: "Ship fast & iterate",
-            lookingFor: "Technical Co-Founder",
-            industries: [],
-          },
-    [profile],
+      [...FOUNDERS]
+        .sort((a, b) => computeSynergy(me, b).overall - computeSynergy(me, a).overall)
+        .slice(0, 3),
+    [me],
   );
 
   const filtered = useMemo(() => applyFilters(FOUNDERS, filters), [filters]);
@@ -500,16 +492,21 @@ export default function Dashboard() {
     <main className="relative min-h-screen overflow-x-clip pb-16">
       {/* top bar */}
       <header className="sticky top-0 z-40 flex justify-center px-4 pt-4">
-        <GlassPanel className="flex w-full max-w-5xl items-center gap-3 rounded-2xl px-4 py-2.5">
-          <Link to="/" className="flex items-center gap-2.5">
+        <GlassPanel className="flex w-full max-w-5xl items-center gap-3 rounded-2xl px-4 py-2.5">            <Link to="/" className="flex items-center gap-2.5">
             <span className="flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-[hsl(262_75%_58%)] to-[hsl(200_80%_55%)] text-white">
               <Compass className="size-4" />
             </span>
             <span className="text-[15px] font-semibold tracking-tight">
-              Foundr<span className="text-gradient">Match</span>
+              Founder Connect <span className="text-gradient">AI</span>
             </span>
           </Link>
-          <span className="tag ml-2 hidden font-mono text-[10px] text-emerald-700 sm:inline-flex">
+          <Link
+            to="/founders"
+            className="tag ml-2 hidden font-mono text-[10px] text-primary transition-colors hover:bg-primary/10 sm:inline-flex"
+          >
+            Browse catalog
+          </Link>
+          <span className="tag hidden font-mono text-[10px] text-emerald-400 sm:inline-flex">
             {actions?.length ?? 0} actions taken
           </span>
           <div className="ml-auto flex items-center gap-2">
@@ -632,6 +629,82 @@ export default function Dashboard() {
         <p className="mt-6 text-center font-mono text-[11px] text-muted-foreground">
           Prototype tip: drag the card or use the buttons — actions sync to your account.
         </p>
+
+        {/* Catalog + conversations */}
+        <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr]">
+          <GlassPanel className="rounded-3xl p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-[15px] font-semibold">Top matches in the catalog</h2>
+                <p className="mt-0.5 text-xs text-muted-foreground">Ranked by vision synergy with your graph.</p>
+              </div>
+              <Link to="/founders" className="shrink-0">
+                <Button size="sm" variant="outline" className="glass-subtle rounded-xl border-white/10">
+                  View all <ArrowRight className="size-3.5" />
+                </Button>
+              </Link>
+            </div>
+            <div className="mt-4 space-y-3">
+              {topMatches.map((f) => (
+                <Link key={f.id} to={`/founders/${f.id}`} className="block">
+                  <GlassPanel hover className="flex items-center gap-3 rounded-2xl p-3">
+                    <FounderAvatar name={f.name} hue={f.avatarHue} />
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[13px] font-semibold">{f.name}</p>
+                      <p className="truncate text-[11px] text-muted-foreground">{f.industries.join(" · ")}</p>
+                    </div>
+                    <span className="font-mono text-xs font-semibold text-primary">
+                      {computeSynergy(me, f).overall}%
+                    </span>
+                  </GlassPanel>
+                </Link>
+              ))}
+            </div>
+          </GlassPanel>
+
+          <GlassPanel className="rounded-3xl p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-[15px] font-semibold">Your conversations</h2>
+                <p className="mt-0.5 text-xs text-muted-foreground">Threads you've joined from founder profiles.</p>
+              </div>
+            </div>
+            <div className="mt-4">
+              {threads === undefined ? (
+                <p className="text-sm text-muted-foreground">Loading…</p>
+              ) : threads.length === 0 ? (
+                <div className="glass-subtle rounded-2xl px-4 py-8 text-center">
+                  <p className="text-sm font-medium">No conversations yet</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Open a founder profile and say hello to start a thread.
+                  </p>
+                  <Button size="sm" className="mt-4 rounded-xl" asChild>
+                    <Link to="/founders">Browse the catalog</Link>
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {threads.slice(0, 4).map((t) => {
+                    const f = FOUNDERS.find((x) => x.id === t.founderId);
+                    if (!f) return null;
+                    return (
+                      <Link key={t.founderId} to={`/founders/${t.founderId}`} className="block">
+                        <GlassPanel hover className="flex items-center gap-3 rounded-2xl p-3">
+                          <FounderAvatar name={f.name} hue={f.avatarHue} />
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-[13px] font-semibold">{f.name}</p>
+                            <p className="truncate text-[11px] text-muted-foreground">{t.lastBody}</p>
+                          </div>
+                          <span className="tag font-mono text-[10px]">{t.count} msg{t.count === 1 ? "" : "s"}</span>
+                        </GlassPanel>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </GlassPanel>
+        </div>
       </div>
 
       <SynergyModal founder={modalFounder} me={me} open={modalOpen} onOpenChange={setModalOpen} />
