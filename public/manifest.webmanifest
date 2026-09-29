@@ -1,0 +1,17 @@
+{
+  "name": "FoundrMatch",
+  "short_name": "FoundrMatch",
+  "description": "Find the Woz to your Jobs — AI co-founder matching on vision, skills, culture and equity.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
