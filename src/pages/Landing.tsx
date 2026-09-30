@@ -193,7 +193,7 @@ function Hero() {
               <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
             </span>
             <span className="tabular font-mono text-foreground">{count.toLocaleString()}</span>
-            <span className="text-muted-foreground">matches made this week</span>
+            <span className="text-muted-foreground">founders connected this week</span>
           </motion.div>
 
           <motion.h1
@@ -202,7 +202,7 @@ function Hero() {
             transition={{ duration: 0.6, delay: 0.08 }}
             className="mt-5 text-balance text-4xl font-semibold leading-[1.06] tracking-tight sm:text-5xl lg:text-[3.6rem]"
           >
-            Find the Woz to your <span className="text-gradient">Jobs.</span>
+            Connect founders, <span className="text-gradient">not soulmates.</span>
           </motion.h1>
 
           <motion.p
@@ -211,9 +211,10 @@ function Hero() {
             transition={{ duration: 0.6, delay: 0.16 }}
             className="mt-5 max-w-xl text-pretty text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            Founder Connect AI pairs you with co-founders who share your vision, culture and
-            work ethic — scored on skills, values and timing, not just keywords. Browse the
-            catalog, study the match math, and open a conversation when the numbers look right.
+            Founder Connect AI pre-screens every founder and scores them on vision, skills,
+            equity and working style — so you spend your time on people worth building with,
+            not a sea of unvetted profiles. Browse the catalog and open a conversation when
+            the numbers look right.
           </motion.p>
 
           <motion.div
@@ -368,7 +369,7 @@ function OnboardingPreview() {
                       </div>
                     ))}
                   </div>
-                  <p className="mt-3 text-xs text-muted-foreground">We match you with founders at the same altitude.</p>
+                  <p className="mt-3 text-xs text-muted-foreground">We pair you with founders at the same altitude — then you take the first step.</p>
                 </div>
               )}
               {step === 2 && (
@@ -389,7 +390,7 @@ function OnboardingPreview() {
                       </span>
                     ))}
                   </div>
-                  <p className="mt-3 text-xs text-muted-foreground">Your gaps define your matching weights.</p>
+                  <p className="mt-3 text-xs text-muted-foreground">Your gaps define how strongly we pair you.</p>
                 </div>
               )}
               {step === 3 && (
@@ -511,23 +512,23 @@ function OnboardingPreview() {
 const FEATURES = [
   {
     icon: BrainCircuit,
-    title: "Vision-synergy engine",
-    body: "Every pair is scored on vision, skills, working style, commitment and equity — five weighted factors, one honest number.",
+    title: "Pre-screened graph",
+    body: "We parse skills, stage, equity and working style before you see a card. Every founder is hired-evaluate-ready, not a LinkedIn blur.",
   },
   {
     icon: RadarIcon,
-    title: "Skillset radar",
-    body: "Tech vs Product vs Growth vs Ops, plotted side-by-side. See where you complement — and where you'd double-count.",
+    title: "Complement radar",
+    body: "Tech vs Product vs Growth vs Ops plotted side-by-side. See where you close each other's gaps — not where you duplicate.",
   },
   {
     icon: Filter,
-    title: "Smart filters",
-    body: "Industry, stack, geography, funding stage and equity expectation. The deck reshapes itself as you filter.",
+    title: "Decision-grade filters",
+    body: "Industry, stack, geography, stage, equity and response time. The catalog reshapes itself as you filter.",
   },
   {
     icon: Coffee,
     title: "Coffee chat in one tap",
-    body: "No cold intros. Request a 20-minute video coffee and we handle the scheduling handshake.",
+    body: "No guessing games. Request a 20-minute video coffee and we handle the scheduling handshake.",
   },
   {
     icon: FileText,
@@ -543,11 +544,10 @@ const FEATURES = [
 
 function Features() {
   return (
-    <section id="features" className="mx-auto w-full max-w-6xl px-4 py-24">
-      <SectionHeading
+    <section id="features" className="mx-auto w-full max-w-6xl px-4 py-24">        <SectionHeading
         eyebrow="Matching AI"
-        title={<>LinkedIn credibility, <span className="text-gradient">matchmaker mechanics</span></>}
-        sub="FoundrMatch runs a compatibility engine purpose-built for the highest-stakes relationship in your company: the cap table."
+        title={<>Connect founders, <span className="text-gradient">not soulmates.</span></>}
+        sub="An AI pre-screener and compatibility engine purpose-built for the highest-stakes relationship in your company: the cap table. We surface who complements your graph — then you decide."
       />
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map((f, i) => (
@@ -587,11 +587,10 @@ function DeckPreview() {
   }));
 
   return (
-    <section id="deck" className="mx-auto w-full max-w-6xl px-4 py-24">
-      <SectionHeading
+    <section id="deck" className="mx-auto w-full max-w-6xl px-4 py-24">        <SectionHeading
         eyebrow="Catalog & Discovery"
-        title={<>Browse like LinkedIn, <span className="text-gradient">match like a pro</span></>}
-        sub="A searchable catalog with the numbers that matter: compatibility score, pitch, stack — and a full synergy breakdown plus a conversation thread on every profile."
+        title={<>Browse like LinkedIn, <span className="text-gradient">connect like a founder</span></>}
+        sub="A searchable catalog with the numbers that matter: compatibility score, pitch, stack — and a full synergy breakdown plus a conversation thread on every profile. Hard to ignore, easy to act on."
       />
 
       <div className="mt-12 grid items-start gap-6 lg:grid-cols-[0.95fr_1.05fr]">
@@ -680,8 +679,8 @@ function DeckPreview() {
 function Steps() {
   const steps = [
     { icon: UserPlus, title: "Map your graph", body: "Two sentences or a pasted bio. The parser extracts skills, industries, stage and expectations." },
-    { icon: Layers, title: "Browse the catalog", body: "Search and filter verified founders ranked by how well they complement your graph." },
-    { icon: Coffee, title: "Message, then meet", body: "Open a thread, book a coffee chat, swap decks under NDA — then build the thing together." },
+    { icon: Layers, title: "Browse the catalog", body: "Filter verified founders by industry, stack, stage, equity and response time — ranked by how well they complement your graph." },
+    { icon: Coffee, title: "Message, then meet", body: "Open a thread, request coffee, swap decks under NDA — then build the thing together. Connect founders, not soulmates." },
   ];
   return (
     <section className="mx-auto w-full max-w-6xl px-4 pb-24">
