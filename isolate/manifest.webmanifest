@@ -1,0 +1,17 @@
+{
+  "name": "Founder Connect AI",
+  "short_name": "Founder Connect",
+  "description": "Match with founders who share your vision — AI-scored compatibility on skills, culture and equity.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
